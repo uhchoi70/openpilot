@@ -111,6 +111,7 @@ struct Alert {
   }
 };
 
+/*
 typedef enum UIStatus {
   STATUS_DISENGAGED,
   STATUS_ENGAGED,
@@ -124,6 +125,29 @@ const QColor bg_colors [] = {
   [STATUS_ENGAGED] = QColor(0x17, 0x86, 0x44, 0x96),
   [STATUS_WARNING] = QColor(0xDA, 0x6F, 0x25, 0x96),
   [STATUS_ALERT] = QColor(0xC9, 0x22, 0x31, 0x96),
+  [STATUS_DND] = QColor(0x32, 0x32, 0x32, 0x96),
+}; */
+
+// uhchoi
+typedef enum UIStatus {
+  STATUS_DISENGAGED,
+  STATUS_ENGAGED,
+  STATUS_WARNING,
+  STATUS_ALERT,
+  STATUS_MANUAL,
+  STATUS_BRAKE,
+  STATUS_CRUISE,  
+  STATUS_DND,  
+} UIStatus;
+
+const QColor bg_colors [] = {
+  [STATUS_DISENGAGED] = QColor(0x17, 0x33, 0x49, 0x96),
+  [STATUS_ENGAGED] = QColor(0x17, 0x86, 0x44, 0x96),
+  [STATUS_WARNING] = QColor(0xDA, 0x6F, 0x25, 0x96),
+  [STATUS_ALERT] = QColor(0xC9, 0x22, 0x31, 0x96),
+  [STATUS_MANUAL] = QColor(0x77, 0x77, 0x77, 0x77),
+  [STATUS_BRAKE] = QColor(0xCC, 0x32, 0x00, 0x96),
+  [STATUS_CRUISE] = QColor(0x00, 0x64, 0xC8, 0x96),
   [STATUS_DND] = QColor(0x32, 0x32, 0x32, 0x96),
 };
 
@@ -147,6 +171,7 @@ typedef struct UIScene {
   float alert_blinking_rate;
   cereal::PandaState::PandaType pandaType;
 
+  bool steeringPress;  // uhchoi
   bool brakePress;
   bool gasPress;
   bool brakeHold;
@@ -263,6 +288,9 @@ typedef struct UIScene {
   bool OPKR_Debug;
   float steering_torque;
   int steer_max;
+
+  float currentGear; // uhchoi
+  float gearStep; // uhchoi
 
   cereal::DeviceState::Reader deviceState;
   cereal::CarState::Reader car_state;
